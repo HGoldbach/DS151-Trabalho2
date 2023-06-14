@@ -33,7 +33,7 @@ const Perfil = ({navigation}) => {
             <TouchableOpacity style={styles.btn} onPress={mostrarDialog}>
                 <Text style={styles.text}>Admin</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Usuario")}> 
                 <Text style={styles.text}>Usuário</Text>
             </TouchableOpacity>
             <View>

@@ -1,41 +1,38 @@
-import { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import nba from '../../services/api/nba';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import NbaTime from '../../services/sqlite/NbaTime';
+import { useEffect, useState } from 'react';
 
-const Administrador = ({navigation}) => {
+const Usuario = ({navigation}) => {
 
+    const [times,setTimes] = useState([]);
 
-    const [results, setResults] = useState([]);
-
-    const chamaApi = async () => {
-        const {data} = await nba.request();
-        console.log(data.data);
-        setResults(data.data);
-    }
-
-    const dadosTime = time => {
-        console.log(time);
-    }
+    const buscarTimesInseridos = async () => {
+        try {
+            const data = await NbaTime.listarTodos();
+            const times = data.map(t => t);
+            console.log(times);
+            setTimes(times)
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
-        chamaApi();
-    }, []);
+        buscarTimesInseridos();
+    },[])
 
-    return (
+    return(
         <View style={styles.container}> 
             <Text style={styles.title}>NBA TIMES</Text>
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Inseridos')}>
-                <Text style={styles.text}>Times Inseridos</Text>
-            </TouchableOpacity>
             <FlatList 
-                data={results}
+                data={times}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => {
                     return (
                         <View>
-                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Time', {data: item})}>
-                                <Text style={styles.abbv}>{item.abbreviation}</Text>
-                                <Text>{item.full_name}</Text>
+                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("Time Usuario", {data: item})}>
+                                <Text>{item.sigla}</Text>
+                                <Text>{item.nome}</Text>
                             </TouchableOpacity>
                         </View>
                     )
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         fontSize: 28,
@@ -82,4 +79,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Administrador;
+export default Usuario;

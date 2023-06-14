@@ -1,42 +1,36 @@
-import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import NbaTime from '../../services/sqlite/NbaTime';
+import { useEffect, useState } from 'react';
 
-const Time = ({ route }) => {
+const TimeUsuario = ({ navigation, route }) => {
 
     const [time, setTime] = useState([]);
-    const [excluir, setExcluir] = useState(false);
-    const [salvar, setSalvar] = useState(false);
 
     const recuperaDadosTime = () => {
         const time = route.params.data;
         setTime(time);
     }
 
-    const inserirTime = () => {
-        NbaTime.create({ nome: time.full_name, sigla: time.abbreviation, cidade: time.city, conferencia: time.conference, divisao: time.division })
-            .then(id => console.log(`Time inserido com o id: ${id}, Nome: ${time.full_name}`))
-            .catch(erro => console.error(erro))
-    }
-
     useEffect(() => {
         recuperaDadosTime();
-    }, []);
+    },[])
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{time.full_name}</Text>
-            <Text>Sigla: {time.abbreviation}</Text>
-            <Text>Cidade: {time.city}</Text>
-            <Text>Conferência: {time.conference}</Text>
-            <Text>Divisão: {time.division}</Text>
+            <Text style={styles.title}>{time.nome}</Text>
+            <Text>Sigla: {time.sigla}</Text>
+            <Text>Cidade: {time.cidade}</Text>
+            <Text>Conferência: {time.conferencia}</Text>
+            <Text>Divisão: {time.divisao}</Text>
+            <Text>Divisão: {time.id}</Text>
             <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.btn} onPress={inserirTime}>
-                    <Text style={styles.text}>Salvar</Text>
+                <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Editar Time", {data: time.id})}>
+                    <Text style={styles.text}>Editar</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -69,4 +63,5 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Time;
+export default TimeUsuario;
+
