@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Dialog from "react-native-dialog";
 import DialogInput from 'react-native-dialog/lib/Input';
 
+/**
+ * Componente que exibe uma tela de acesso com opções para administrador e usuário.
+ */
 const AcessoPerfil = ({ navigation }) => {
     const [visible, setVisible] = useState(false);
     const [senha, setSenha] = useState("");

@@ -1,6 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { timeImages } from '../../const/TimeData';
 
+/*
+* Componente responsável pela exibição dos detalhes de um time para futura edição
+*/
 const DetalhesTimeUsuario = ({ navigation, route }) => {
 
     // Extrai as propriedades necessárias do objeto route.params.data

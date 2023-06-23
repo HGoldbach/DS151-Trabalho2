@@ -3,10 +3,21 @@ import NbaTime from '../../services/sqlite/NbaTime';
 import React, { useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
+
+/**
+ * Componente que exibe uma lista de times da NBA para o usuário.
+ * Os times são buscados do banco de dados e exibidos em uma lista.
+ * O usuário pode selecionar um time para ver mais detalhes.
+ */
 const ListaTimesUsuario = ({ navigation }) => {
 
     const [times, setTimes] = useState([]);
 
+    /**
+     * Função assíncrona para buscar os times inseridos no banco de dados.
+     * Atualiza o estado 'times' com os dados obtidos.
+     * Em caso de falha, exibe um alerta informando o erro.
+     */
     const buscarTimesInseridos = async () => {
         try {
             const data = await NbaTime.listarTodos();
